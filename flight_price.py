@@ -45,7 +45,6 @@ def price_page():
 
         # Add the analysis variable
         df['co2'] = df['co2_emissions'] - df['avg_co2_emission_for_this_route']
-        df['price_by_duration'] = df['price'] / df['duration']
 
         return df
 
@@ -239,13 +238,13 @@ def price_page():
                 st.write("You selected", len(multiselect), 'airline companies')
                 flight_final_df = flight_df[flight_df['airline_name'].isin(multiselect)]
 
-                price_by_airline = flight_final_df.groupby("airline_name")['price_by_duration'].mean().reset_index()
-                sorted_price = price_by_airline.sort_values("price_by_duration", ascending=False)
+                price_by_airline = flight_final_df.groupby("airline_name")['price'].mean().reset_index()
+                sorted_price = price_by_airline.sort_values("price", ascending=False)
 
-                fig_price = px.bar(sorted_price, x="airline_name", y="price_by_duration", color="airline_name",
+                fig_price = px.bar(sorted_price, x="airline_name", y="price", color="airline_name",
                                    labels={"airline_name": "Airline Company",
-                                           "price_by_duration": "Price (USD) Per Duration Time"},
-                                   title="Airline Companies With The Highest Average Price By Duration Time")
+                                           "price_by_duration": "Average Price (USD)"},
+                                   title="Airline Companies With The Highest Average Price")
 
                 st.plotly_chart(fig_price)
 
@@ -284,6 +283,7 @@ def price_page():
                                       title=f"Relationship Between Number Of Stops Of {airline_name_choice} Airline Company",
                                       category_orders={"stops": sorted(stop_final_df["stops"].unique())})
                     fig_stop.update_layout(legend={"title": "Number of Stops"})
+                    st.plotly_chart(fig_stop)
 
                 else:
                     company_list = [""] + sorted(stop_df['airline_name'].drop_duplicates().tolist())
@@ -296,8 +296,7 @@ def price_page():
                                           title=f"Relationship Between Number Of Stops Of {MetricSlider02} Airline Company",
                                           category_orders={"stops": sorted(stop_final_df["stops"].unique())})
                         fig_stop.update_layout(legend={"title": "Number of Stops"})
-
-                st.plotly_chart(fig_stop)
+                        st.plotly_chart(fig_stop)
 
         except IndexError:
             st.warning("Throwing an exception!")
