@@ -2,7 +2,27 @@ import streamlit as st
 from PIL.Image import Image
 from delay import delay_page
 from flight_price import price_page
-
+import pandas as pd
+import streamlit as st
+import joblib as jl
+import streamlit as st
+import pandas as pd
+import numpy as np
+import plotly.express as px
+import base64
+import plotly.io as pio
+import plotly.graph_objects as go
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from matplotlib import pyplot as plt
+from PIL import Image
+import base64
+import plotly.io as pio
 
 st.set_page_config(page_title='Flight Analysis', page_icon = '✈️')
 
