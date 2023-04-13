@@ -4,7 +4,8 @@ import plotly.express as px
 
 
 def delay_page():
-    st.title('⏰ Delay Analysis')
+    st.title("⏰ Flight Delay Probability Calculator")
+
     # Load the dataset
     data = pd.read_csv("Combined_Flights_2022.csv")
     state_codes = {
@@ -137,10 +138,16 @@ def delay_page():
     }
 
     # User inputs
-    st.title("Flight Delay Predictor")
-    selected_state = st.selectbox("Select State", state_codes.keys(), key='state_selectbox')
-    selected_airport = st.selectbox("Select Airport", data["Dest"].unique(), key='airport_selectbox')
-    selected_airline = st.selectbox("Select Airline", data["Airline"].unique(), key='airline_selectbox')
+    ListA = [""] + sorted(state_codes.keys())
+    selected_state = st.selectbox(":red[Enter your destination state*] 🏞", ListA, key='state_selectbox')
+    temp_data = data[data["DestStateName"] == selected_state]
+
+    ListB = [""] + sorted(temp_data['Dest'].unique())
+    selected_airport = st.selectbox(":red[Enter your destination airport*] 🛬", ListB, key='airport_selectbox')
+    temp_data = temp_data[temp_data["Dest"] == selected_airport]
+
+    ListC = [""] + sorted(temp_data["Airline"].unique())
+    selected_airline = st.selectbox(":red[Enter your airline company you will take*] 💼", ListC, key='airline_selectbox')
 
     import plotly.graph_objects as go
 
@@ -158,36 +165,47 @@ def delay_page():
         )
         return fig
 
-    fig = create_choropleth(state_data, selected_state)
-    # Adjust the map dimensions
-    fig.update_layout(
-        geo=dict(
-            scope='usa',
-            projection_scale=4,  # Adjust the zoom level here
-            center=state_centers[selected_state],
-        ),
-        autosize=False,
-        width=800,
-        height=600,
-    )
+    if selected_state != "" and selected_airport != "" and selected_airline != "":
+        fig = create_choropleth(state_data, selected_state)
+        # Adjust the map dimensions
+        fig.update_layout(
+            geo=dict(
+                scope='usa',
+                projection_scale=4,  # Adjust the zoom level here
+                center=state_centers[selected_state],
+            ),
+            autosize=False,
+            width=800,
+            height=600,
+        )
 
+    else:
+        fig = px.choropleth(
+            state_data,
+            locations='state_code',
+            locationmode='USA-states',
+            color='delay_ratio',
+            scope='usa',
+            color_continuous_scale="Viridis_r",
+            labels={'delay_ratio': 'Delay Ratio'},
+            title='Flight Delay Ratio by Destination State'
+        )
     # Start button
-    if st.button("Start"):
+    if st.button("Predict Your Possible Delay Probability 💜") and selected_state != "" and selected_airport != "" and selected_airline != "":
         # Filter the data based on user inputs
         user_filtered_data = data[(data["Airline"] == selected_airline) & (data["Dest"] == selected_airport) & (
-                    data["DestStateName"] == selected_state)]
+                data["DestStateName"] == selected_state)]
 
         # Calculate the probability of delay
         delayed_user_filtered_data = user_filtered_data[
             (user_filtered_data['DepDelayMinutes'] > 0) | (user_filtered_data['Diverted'] == 1) | (
-                        user_filtered_data['Cancelled'] == 1)]
+                    user_filtered_data['Cancelled'] == 1)]
         delay_probability = len(delayed_user_filtered_data) / len(user_filtered_data) if len(
             user_filtered_data) > 0 else 0
 
         # Display the result with larger font size
-        st.markdown(f"<h3>Airline: {selected_airline}, Airport: {selected_airport}, State: {selected_state}</h3>",
-                    unsafe_allow_html=True)
-        st.markdown(f"<h3>Probability of delay: {delay_probability * 100:.2f}%</h3>", unsafe_allow_html=True)
+        st.write(f"You chose {selected_airline} airline. Your destination is {selected_airport} in {selected_state} state ✨")
+        st.markdown(f" ## Your Delay Probability: {delay_probability * 100:.2f}% 🤯")
 
     # Display the interactive choropleth map
     st.plotly_chart(fig)

@@ -24,6 +24,7 @@ import plotly.io as pio
 def price_page():
     # Title
     st.title("🛩️ Flight Search & Price Prediction")
+    st.image('flight_bar.png', use_column_width=True)
 
     def load_data():
         # Load data
@@ -48,21 +49,6 @@ def price_page():
 
         return df
 
-    df = load_data()
-
-    with st.expander("About this app ℹ️ "):
-        st.write("")
-
-        st.markdown(
-            """
-        Introducing our innovative solution to help travelers find the most suitable flights based on their origin and destination. Our app uses advanced machine learning algorithms to provide personalized flight recommendations, taking into account factors such as cost, flexibility, and tolerance for delays. Say goodbye to the overwhelming and time-consuming process of searching for flights, and let our app simplify your travel experience. With our user-friendly interface and personalized recommendations, you can trust that you're getting the best flight options for your unique travel needs. Try it now and make your next trip stress-free.
-
-        """
-        )
-
-        st.write("")
-
-    # KNN = jl.load('KNN.joblib')
     DT = jl.load('DT.joblib')
 
     # Price Prediction
@@ -88,13 +74,13 @@ def price_page():
 
     # Stops choice
     stop_list = [""] + sorted(transaction_df['stops'].drop_duplicates().tolist())
-    stop_choice = col2.selectbox("Enter you stops choice  🚏 ", stop_list)
+    stop_choice = col2.selectbox("Enter your stops choice  🚏 ", stop_list)
     if stop_choice != "":
         transaction_df = transaction_df[transaction_df['stops'] == stop_choice]
 
     # Airline name choice
     airline_name_list = [""] + sorted(transaction_df['airline_name'].drop_duplicates().tolist())
-    airline_name_choice = st.selectbox("Enter your Airline Company Choice ✈️", airline_name_list)
+    airline_name_choice = st.selectbox("Enter your airline company choice ✈️", airline_name_list)
     if airline_name_choice != "":
         transaction_df = transaction_df[transaction_df['airline_name'] == airline_name_choice]
 
