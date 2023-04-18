@@ -19,6 +19,7 @@ from matplotlib import pyplot as plt
 from PIL import Image
 import base64
 import plotly.io as pio
+import random
 
 
 def price_page():
@@ -28,7 +29,7 @@ def price_page():
 
     def load_data():
         # Load data
-        df = pd.read_csv('flight data.csv', on_bad_lines='skip')
+        df = pd.read_csv('flight_data.csv', on_bad_lines='skip')
         df = df.drop_duplicates()
         df = df.dropna()
 
@@ -48,7 +49,7 @@ def price_page():
 
         return df
 
-    DT = jl.load('DT.joblib')
+    RF = jl.load('RF.joblib')
 
     # Price Prediction
 
@@ -90,10 +91,8 @@ def price_page():
                      'departure_month']
 
     # From country input
-    dict_from_country = {0: 'Algeria', 1: 'Argentina', 2: 'Australia', 3: 'Austria', 4: 'Belgium', 5: 'Brazil',
-                         6: 'Canada',
-                         7: 'Chile', 8: 'China', 9: 'Columbia', 10: 'Denmark', 11: 'Dublin', 12: 'Egypt',
-                         13: 'Ethiopia',
+    dict_from_country = {0: 'Algeria', 1: 'Argentina', 2: 'Australia', 3: 'Austria', 4: 'Belgium', 5: 'Brazil', 6: 'Canada',
+                         7: 'Chile', 8: 'China', 9: 'Columbia', 10: 'Denmark', 11: 'Dublin', 12: 'Egypt', 13: 'Ethiopia',
                          14: 'France', 15: 'Germany', 16: 'Greece', 17: 'India'}
     for key_from_country, value_from_country in dict_from_country.items():
         if value_from_country == from_country_choice:
@@ -118,43 +117,31 @@ def price_page():
             input_values.append(key_dest_country)
 
     # Airline name input
-    dict_airline_name = {0: 'ANA', 1: 'ASL Airlines', 2: 'Aegean', 3: 'Aer Lingus', 4: 'Aerolineas Argentinas',
-                         5: 'Aeromexico', 6: 'Air Algerie', 7: 'Air Arabia', 8: 'Air Arabia Maroc', 9: 'Air Astana',
-                         10: 'Air Austral', 11: 'Air Baltic', 12: 'Air Canada', 13: 'Air China', 14: 'Air Dolomiti',
-                         15: 'Air Europa', 16: 'Air France', 17: 'Air India', 18: 'Air Macau', 19: 'Air Malta',
-                         20: 'Air Mauritius', 21: 'Air Moldova', 22: 'Air New Zealand', 23: 'Air Niugini',
-                         24: 'Air Serbia',
-                         25: 'Air Seychelles', 26: 'Air Tahiti Nui', 27: 'Air Transat', 28: 'Air-India Express',
-                         29: 'AirAsia (India)', 30: 'AirAsia X', 31: 'Aircalin', 32: 'American', 33: 'Arkia',
-                         34: 'Asiana',
-                         35: 'Austrian', 36: 'Avianca', 37: 'Azores Airlines', 38: 'Azul', 39: 'Bamboo Airways',
-                         40: 'Biman', 41: 'Blue Air', 42: 'BoA', 43: 'British Airways', 44: 'Brussels Airlines',
-                         45: 'Bulgaria Air', 46: 'COPA', 47: 'CSA', 48: 'Cathay Pacific', 49: 'Cebu Pacific',
-                         50: 'China Airlines', 51: 'China Eastern', 52: 'China Southern', 53: 'Corendon', 54: 'Croatia',
-                         55: 'Cyprus Airways', 56: 'Delta', 57: 'EVA Air', 58: 'EgyptAir', 59: 'El Al', 60: 'Emirates',
-                         61: 'Ethiopian', 62: 'Etihad', 63: 'Eurowings', 64: 'Eurowings Discover', 65: 'Fiji Airways',
-                         66: 'Finnair', 67: 'Flair Airlines', 68: 'Fly One', 69: 'Flynas', 70: 'GO FIRST',
-                         71: 'Garuda Indonesia', 72: 'Gol', 73: 'Gulf Air', 74: 'Hainan', 75: 'Hawaiian',
-                         76: 'Hong Kong Airlines', 77: 'ITA', 78: 'Iberia', 79: 'Iberia Express', 80: 'Icelandair',
-                         81: 'IndiGo', 82: 'JAL', 83: 'Jazeera', 84: 'Jet2', 85: 'JetBlue', 86: 'Jetstar',
-                         87: 'Juneyao Airlines', 88: 'KLM', 89: 'Kenya Airways', 90: 'Korean Air', 91: 'Kuwait Airways',
-                         92: 'LATAM', 93: 'LOT', 94: 'Lanmei Airlines (Cambodia)', 95: 'Loganair', 96: 'Lufthansa',
-                         97: 'Luxair', 98: 'MEA', 99: 'MIAT', 100: 'Malaysia Airlines', 101: 'Malindo Air', 102: 'Neos',
-                         103: 'Nepal Airlines', 104: 'Nile Air', 105: 'Norwegian', 106: 'Oman Air', 107: 'Pakistan',
-                         108: 'Paranair', 109: 'Pegasus', 110: 'Philippine Airlines', 111: 'Qantas',
-                         112: 'Qatar Airways',
-                         113: 'Rex', 114: 'Royal Air Maroc', 115: 'Royal Brunei', 116: 'Royal Jordanian',
-                         117: 'RwandAir',
-                         118: 'Ryanair', 119: 'SAS', 120: 'SNCF', 121: 'SWISS', 122: 'Saudia', 123: 'Scoot',
-                         124: 'Shandong', 125: 'Shanghai Airlines', 126: 'Shenzhen', 127: 'Sichuan Airlines',
-                         128: 'Singapore Airlines', 129: 'Sky Airline', 130: 'Sky Express', 131: 'SpiceJet',
-                         132: 'Spirit',
-                         133: 'SriLankan', 134: 'SunExpress', 135: 'Swoop', 136: 'TAAG', 137: 'TAROM', 138: 'THAI',
-                         139: 'TUI fly', 140: 'Tap Air Portugal', 141: 'Thai Smile', 142: 'Transavia', 143: 'Tunisair',
-                         144: 'Turkish Airlines', 145: 'Uni Airways', 146: 'United', 147: 'VOEPASS', 148: 'VietJet Air',
-                         149: 'Virgin Atlantic', 150: 'Virgin Australia', 151: 'Vistara', 152: 'Viva Air',
-                         153: 'VivaAerobus', 154: 'Volaris', 155: 'Vueling', 156: 'WestJet', 157: 'Wideroe',
-                         158: 'Wizz Air', 159: 'XiamenAir', 160: 'easyJet', 161: 'flydubai', 162: 'jetSMART'}
+    dict_airline_name = {0: 'ANA', 1: 'ASL Airlines', 2: 'Aegean', 3: 'Aer Lingus',
+                         4: 'Aerolineas Argentinas', 5: 'Aeromexico', 6: 'Air Algerie', 7: 'Air Arabia',
+                         8: 'Air Arabia Maroc', 9: 'Air Astana', 10: 'Air Baltic', 11: 'Air Canada', 12: 'Air China',
+                         13: 'Air Dolomiti', 14: 'Air Europa', 15: 'Air France', 16: 'Air India', 17: 'Air Macau',
+                         18: 'Air Malta', 19: 'Air Moldova', 20: 'Air New Zealand', 21: 'Air Serbia', 22: 'Air Tahiti Nui',
+                         23: 'Air Transat', 24: 'AirAsia (India)', 25: 'AirAsia X', 26: 'Aircalin', 27: 'American',
+                         28: 'Arkia', 29: 'Asiana', 30: 'Austrian', 31: 'Avianca', 32: 'Azores Airlines', 33: 'Azul',
+                         34: 'Biman', 35: 'BoA', 36: 'British Airways', 37: 'Brussels Airlines', 38: 'Bulgaria Air', 39: 'COPA',
+                         40: 'CSA', 41: 'Cathay Pacific', 42: 'China Airlines', 43: 'China Eastern', 44: 'China Southern',
+                         45: 'Croatia', 46: 'Delta', 47: 'EVA Air', 48: 'EgyptAir', 49: 'El Al', 50: 'Emirates', 51: 'Ethiopian',
+                         52: 'Etihad', 53: 'Eurowings', 54: 'Eurowings Discover', 55: 'Fiji Airways', 56: 'Finnair', 57: 'Flynas',
+                         58: 'GO FIRST', 59: 'Garuda Indonesia', 60: 'Gol', 61: 'Gulf Air', 62: 'Hainan', 63: 'Hawaiian',
+                         64: 'Hong Kong Airlines', 65: 'ITA', 66: 'Iberia', 67: 'Icelandair', 68: 'IndiGo', 69: 'JAL',
+                         70: 'Jazeera', 71: 'JetBlue', 72: 'Jetstar', 73: 'Juneyao Airlines', 74: 'KLM', 75: 'Kenya Airways',
+                         76: 'Korean Air', 77: 'Kuwait Airways', 78: 'LATAM', 79: 'LOT', 80: 'Loganair', 81: 'Lufthansa',
+                         82: 'Luxair', 83: 'MEA', 84: 'Malaysia Airlines', 85: 'Neos', 86: 'Nepal Airlines', 87: 'Nile Air',
+                         88: 'Norwegian', 89: 'Oman Air', 90: 'Paranair', 91: 'Pegasus', 92: 'Philippine Airlines', 93: 'Qantas',
+                         94: 'Qatar Airways', 95: 'Rex', 96: 'Royal Air Maroc', 97: 'Royal Brunei', 98: 'Royal Jordanian',
+                         99: 'RwandAir', 100: 'Ryanair', 101: 'SAS', 102: 'SWISS', 103: 'Saudia', 104: 'Scoot', 105: 'Shandong',
+                         106: 'Shanghai Airlines', 107: 'Shenzhen', 108: 'Sichuan Airlines', 109: 'Singapore Airlines',
+                         110: 'Sky Airline', 111: 'SpiceJet', 112: 'Spirit', 113: 'SriLankan', 114: 'TAROM', 115: 'THAI',
+                         116: 'TUI fly', 117: 'Tap Air Portugal', 118: 'Thai Smile', 119: 'Tunisair', 120: 'Turkish Airlines',
+                         121: 'United', 122: 'Virgin Atlantic', 123: 'Virgin Australia', 124: 'Vistara', 125: 'Viva Air',
+                         126: 'VivaAerobus', 127: 'Volaris', 128: 'Vueling', 129: 'WestJet', 130: 'Wideroe', 131: 'Wizz Air',
+                         132: 'XiamenAir', 133: 'easyJet', 134: 'flydubai', 135: 'jetSMART'}
     for key_airline_name, value_airline_name in dict_airline_name.items():
         if airline_name_choice != "":
             if value_airline_name == airline_name_choice:
@@ -191,7 +178,7 @@ def price_page():
     st.write('\n\n')
 
     if st.button("Predict Price & Search The Possible Flights 💛"):
-        prediction = DT.predict(input_variables)
+        prediction = RF.predict(input_variables)
 
         # Recommended Flight Lists
         st.write("Here's your recommended flights list: ")

@@ -7,7 +7,7 @@ def delay_page():
     st.title("⏰ Flight Delay Probability Calculator")
 
     # Load the dataset
-    data = pd.read_csv("Combined_Flights_2022.csv")
+    data = pd.read_csv("Combined_Flights.csv")
     state_codes = {
         'Alabama': 'AL',
         'Alaska': 'AK',
