@@ -20,46 +20,46 @@ Our application consists of two main parts. The first part is dedicated to fligh
 
  - Sampled Datasets
  
-    (1) flight_data.csv (https://www.kaggle.com/datasets/polartech/flight-data-with-1-million-or-more-records)
+    - [flight_data.csv](https://www.kaggle.com/datasets/polartech/flight-data-with-1-million-or-more-records)
     
-    (2) Combined_Flights.csv (https://www.kaggle.com/datasets/robikscube/flight-delay-dataset-20182022)
+    - [Combined_Flights.csv](https://www.kaggle.com/datasets/robikscube/flight-delay-dataset-20182022)
     
  - Machine Learning Model & Data Analysis
     
-    (1) Project Price Prediction Model.ipynb (https://github.com/Nannmemeda/Flight-Analysis-Data-Mining-Project/blob/main/Project%20Model.ipynb)
+    - Price Prediction Model: [Project Price Prediction Model.ipynb](https://github.com/Nannmemeda/Flight-Analysis-Data-Mining-Project/blob/main/Project%20Model.ipynb)
     
-    (2) Exported model: RF.joblib
+    - Exported model: RF.joblib
     
-    (3) Flight Delay Analysis: flight_delay_analysis.ipynb (https://github.com/Nannmemeda/Flight-Analysis-Data-Mining-Project/blob/main/flight_delay_analysis.ipynb)
+    - Flight Delay Analysis: [flight_delay_analysis.ipynb](https://github.com/Nannmemeda/Flight-Analysis-Data-Mining-Project/blob/main/flight_delay_analysis.ipynb)
     
-    (4) Worse cases of delay: worse case.ipynb (https://github.com/Nannmemeda/Flight-Analysis-Data-Mining-Project/blob/main/worst%20case.ipynb)
+    - Worse cases of delay: [worse case.ipynb](https://github.com/Nannmemeda/Flight-Analysis-Data-Mining-Project/blob/main/worst%20case.ipynb)
     
  - Streamlit Application Source Code
  
-    (1) Main file: app.py (https://github.com/Nannmemeda/Flight-Analysis-Data-Mining-Project/blob/main/app.py)
+    - ✈️ Flight Analysis (main file): [app.py](https://github.com/Nannmemeda/Flight-Analysis-Data-Mining-Project/blob/main/app.py)
     
-    (2) flight_price.py (https://github.com/Nannmemeda/Flight-Analysis-Data-Mining-Project/blob/main/flight_price.py)
+    - 🛩️ Flight Search & Price Prediction Page: [flight_price.py](https://github.com/Nannmemeda/Flight-Analysis-Data-Mining-Project/blob/main/flight_price.py)
     
-    (3) delay.py (https://github.com/Nannmemeda/Flight-Analysis-Data-Mining-Project/blob/main/delay.py)
+    - ⏰ Flight Delay Probability Calculator Page: [delay.py](https://github.com/Nannmemeda/Flight-Analysis-Data-Mining-Project/blob/main/delay.py)
     
-    (4) Application pictures: 1) cute_flight.png  2) flight_bar.png
+    - Application pictures: 1) cute_flight.png  2) flight_bar.png
     
  - Project Report
  
-    (1) Flight Analysis Final Report (https://github.com/Nannmemeda/Flight-Analysis-Data-Mining-Project/blob/main/Flight%20Analysis%20Final%20Report.pdf)
+    - [Flight Analysis Final Report](https://github.com/Nannmemeda/Flight-Analysis-Data-Mining-Project/blob/main/Flight%20Analysis%20Final%20Report.pdf)
     
  - Docker File
  
-    (1) Dockerfile (https://github.com/Nannmemeda/Flight-Analysis-Data-Mining-Project/blob/main/Dockerfile)
+    - [Dockerfile](https://github.com/Nannmemeda/Flight-Analysis-Data-Mining-Project/blob/main/Dockerfile)
     
-    (2) requirements.txt
+    - requirements.txt
     
  - Data Sampling Files
  
-    (1) trans_1.py
+    - [trans_1.py](https://github.com/Nannmemeda/Flight-Analysis-Data-Mining-Project/blob/main/trans_1.py)
     
-    (2) trans_2.py
+    - [trans_2.py](https://github.com/Nannmemeda/Flight-Analysis-Data-Mining-Project/blob/main/trans_2.py)
     
  ## Summary
  
- In conclusion, our analysis demonstrates that the Random Forest Regressor is the most effective model for predicting flight prices based on the available data. However, there is potential for improvement through feature engineering, hyperparameter tuning, model stacking, and exploring alternative models. By implementing these recommendations, we can enhance the accuracy of our predictions and provide more reliable estimates for users seeking to make informed decisions about their flight bookings.
+In conclusion, our analysis demonstrates that the Random Forest Regressor is the most effective model for predicting flight prices based on the available data. However, there is potential for improvement through feature engineering, hyperparameter tuning, model stacking, and exploring alternative models. By implementing these recommendations, we can enhance the accuracy of our predictions and provide more reliable estimates for users seeking to make informed decisions about their flight bookings.
