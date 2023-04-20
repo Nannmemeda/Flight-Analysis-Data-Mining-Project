@@ -12,7 +12,7 @@ In conclusion, our project aims to provide travelers with reliable predictions o
 
 ## Project Application Link
 
-Here's our project application link: https://nannmemeda-flight-analysis-data-mining-project-app-3w7qhj.streamlit.app/
+Here's our project application [link]（https://nannmemeda-flight-analysis-data-mining-project-app-3w7qhj.streamlit.app/）
 
 Our application consists of two main parts. The first part is dedicated to flight search and price prediction. It provides flight recommendations and price prediction to the users. The second part of the application is a flight delay probability calculator that calculates the probability of flight delays for the user. This part also provides information on the delay probability for each state.
 
